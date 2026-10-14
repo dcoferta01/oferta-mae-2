@@ -1,0 +1,365 @@
+<title>Recriação NPG N4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* LAYOUT: coluna única centralizada, seções full-width alternando branco / lilás-50, conteúdo preso a 1120px */
+  :root{
+    color-scheme: light;                 /* recriação de um design light-only, comprometido com o visual original */
+    --primary:#4e2f80;                   /* lilás */
+    --secondary:#5f4b8b;                 /* lilás 600 */
+    --bg:#ffffff;
+    --bg-alt:#f7f2ff;                    /* lilás 50 */
+    --text:#2b2333;
+    --muted:#7a6a94;
+    --cta:#2ebf91;                       /* verde */
+    --cta-dark:#239e78;
+    --card-border:#efe9ff;
+    --strike:#a897c8;
+    --hero-top:#efe6ff;
+
+    --font-display:"Playfair Display", Georgia, serif;
+    --font-body:"Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+    --radius:18px; --radius-card:16px; --radius-img:12px; --pill:999px;
+    --wrap:1120px; --gutter:20px; --section-y:68px;
+
+    --shadow-btn:0 10px 18px rgba(46,191,145,.25);
+    --shadow-card:0 10px 24px rgba(78,47,128,.07);
+    --shadow-img:0 8px 20px rgba(78,47,128,.12);
+    --shadow-mockup:0 18px 40px rgba(78,47,128,.18);
+    --shadow-testi:0 10px 28px rgba(78,47,128,.15);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--font-body);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+
+  h1,h2,h3{font-family:var(--font-display);color:var(--primary);line-height:1.25;margin:0 0 12px;text-wrap:balance}
+  h4{font-family:var(--font-body);color:var(--text);font-weight:700;font-size:24px;line-height:1.5;margin:0 0 8px}
+  p{margin:0 0 14px}
+
+  .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gutter)}
+  .center{text-align:center}
+  section{padding-block:var(--section-y)}
+  section.bg{background:var(--bg-alt)}
+
+  /* Banner demo */
+  .demo-ribbon{background:var(--primary);color:#fff;text-align:center;
+    font-size:.82rem;letter-spacing:.3px;padding:8px 16px;font-weight:500}
+
+  /* BOTÕES */
+  .btn{display:inline-block;background:var(--cta);color:#fff;text-decoration:none;font-weight:700;
+    font-family:Arial,Helvetica,sans-serif;padding:16px 28px;border:0;border-radius:var(--pill);
+    box-shadow:var(--shadow-btn);transition:.2s;cursor:pointer;font-size:1rem}
+  .btn:hover{transform:translateY(-2px);background:var(--cta-dark)}
+  .btn:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+  .btn-lg{padding:18px 36px;font-size:1.05rem}
+
+  /* HERO */
+  header.hero{padding:40px 0 44px;background:linear-gradient(180deg,var(--hero-top) 0%,#fff 60%)}
+  .hero h1{font-size:clamp(28px,5vw,44px)}
+  .hero h2{font-family:var(--font-display);font-size:clamp(16px,2.5vw,20px);color:var(--secondary);
+    font-weight:700;max-width:760px;margin:0 auto 22px}
+  .mockup{max-width:460px;width:100%;margin:16px auto 24px;display:block}
+  .mockup img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 40px rgba(78,47,128,.18))}
+  .pain-photo{max-width:420px;width:100%;border-radius:var(--radius-card);box-shadow:var(--shadow-mockup);margin:0 auto 22px;display:block}
+
+  /* Livro-mockup em CSS (representação; sem usar as imagens originais) */
+  .books{display:flex;justify-content:center;align-items:flex-end;gap:14px;perspective:900px}
+  .book{position:relative;border-radius:6px 10px 10px 6px;box-shadow:var(--shadow-mockup);
+    display:flex;flex-direction:column;justify-content:space-between;padding:14px 12px;color:#fff;
+    font-size:.6rem;line-height:1.3;text-align:center;overflow:hidden}
+  .book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:rgba(0,0,0,.18)}
+  .book.main{width:150px;height:210px;background:linear-gradient(160deg,#6a4a9e,#4e2f80)}
+  .book.b1{width:118px;height:168px;background:linear-gradient(160deg,#c77db0,#9c606e)}
+  .book.b2{width:118px;height:168px;background:linear-gradient(160deg,#be574b,#8a3a30)}
+  .book .bt{font-family:var(--font-display);font-weight:700;font-size:.82rem}
+  .book .tag{position:absolute;top:8px;right:8px;background:#fcb900;color:#4e2f80;font-weight:700;
+    border-radius:var(--pill);padding:2px 7px;font-size:.52rem}
+
+  /* LISTAS */
+  ul.clean{list-style:none;padding:0;margin:18px auto 0;max-width:720px;text-align:left}
+  ul.clean li{margin:10px 0 0;padding-left:4px}
+  ul.clean li::before{content:"💜 "}
+
+  /* DEPOIMENTOS */
+  .testi-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:760px;margin:24px auto 0}
+  .testi{background:#fff;border:1px solid var(--card-border);border-radius:14px;padding:20px 22px;
+    box-shadow:var(--shadow-testi)}
+  .testi-quote{font-style:italic;color:var(--secondary);margin:0 0 8px}
+  .testi .who{font-weight:600;color:var(--primary);font-size:.9rem;margin:0}
+  .testi-img{width:100%;height:auto;border-radius:14px;box-shadow:var(--shadow-testi);display:block}
+
+  /* GRID DO PACOTE */
+  .pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:24px}
+  .card{background:#fff;border:1px solid var(--card-border);border-radius:var(--radius-card);
+    padding:18px;box-shadow:var(--shadow-card);display:flex;flex-direction:column}
+  .card .cover{width:100%;height:auto;border-radius:var(--radius-img);box-shadow:var(--shadow-img);
+    margin-bottom:12px;display:block}
+  .card p{font-size:.95rem;color:var(--text);margin:0 0 12px}
+  .badge{display:inline-block;background:var(--bg-alt);color:var(--primary);padding:6px 10px;
+    border-radius:var(--pill);font-size:.85rem;margin-top:auto;align-self:flex-start}
+
+  /* DIFERENCIAIS */
+  .feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:24px;text-align:left}
+  .feature{background:#fff;border:1px solid var(--card-border);border-radius:var(--radius-card);
+    padding:22px;box-shadow:var(--shadow-card)}
+  .feature .ic{font-size:1.6rem;margin-bottom:6px}
+  .feature h4{font-size:18px}
+  .feature p{font-size:.92rem;margin:0}
+
+  /* OFERTA */
+  .offer{padding-block:56px;background:linear-gradient(180deg,#fff 0%,#f7f2ff 100%)}
+  .strike{color:var(--strike);text-decoration:line-through;font-size:1.1rem}
+  .price{font-size:clamp(28px,5vw,40px);font-weight:800;color:var(--primary);margin:8px 0;
+    font-variant-numeric:tabular-nums}
+  .sub{color:var(--muted);font-size:.98rem}
+  .seal{width:132px;height:132px;margin:14px auto 18px;border-radius:50%;
+    background:radial-gradient(circle at 50% 38%,#fff,#f0e8ff);border:3px solid var(--primary);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--primary);
+    font-weight:700;font-size:.7rem;text-align:center;line-height:1.25;box-shadow:var(--shadow-card);
+    text-transform:uppercase;letter-spacing:.4px}
+  .seal b{font-size:2rem;font-family:var(--font-display);line-height:1}
+
+  /* FAQ */
+  .faq details{background:#fff;border:1px solid var(--card-border);border-radius:14px;
+    padding:14px 18px;margin:0 auto 12px;max-width:760px;text-align:left;box-shadow:var(--shadow-card)}
+  .faq summary{font-weight:600;color:var(--primary);cursor:pointer;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";float:right;color:var(--cta);font-weight:700}
+  .faq details[open] summary::after{content:"–"}
+  .faq details p{margin:10px 0 0;font-size:.95rem}
+
+  footer.end{background:var(--primary);color:#fff;text-align:center;padding-block:52px}
+  footer.end h3{color:#fff}
+  footer.end p{color:#efe6ff}
+
+  .lead{max-width:680px;margin:0 auto 10px;color:var(--text)}
+
+  /* ===== SCROLL REVEAL (IntersectionObserver) ===== */
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
+    will-change:opacity,transform;
+  }
+  [data-reveal="left"]{transform:translateX(-40px)}
+  [data-reveal="right"]{transform:translateX(40px)}
+  [data-reveal="down"]{transform:translateY(-40px)}
+  [data-reveal="none"]{transform:none}
+  [data-reveal].is-visible{opacity:1;transform:translate(0,0)}
+
+  /* ===== PROGRESSIVE BLUR (barra fixa no rodapé) ===== */
+  .progressive-blur{position:fixed;bottom:0;left:0;width:100%;height:200px;z-index:999;pointer-events:none}
+  .progressive-blur > div{position:absolute;inset:0}
+
+  @media (prefers-reduced-motion:reduce){
+    [data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+  }
+
+  @media (max-width:980px){
+    .pack-grid,.feature-row{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    section{padding-block:52px}
+    .pack-grid,.feature-row{grid-template-columns:1fr}
+    .book.main{width:124px;height:174px}
+    .book.b1,.book.b2{width:92px;height:132px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+
+<header class="hero">
+  <div class="wrap center">
+    <h1 data-reveal="left" data-delay="0">De gritos e culpa para leveza e cooperação em apenas 7 dias</h1>
+    <h2 data-reveal="left" data-delay="150">Descubra o guia com frases prontas e base científica em Comunicação Não Violenta que ensina o que dizer e como agir nas situações mais desafiantes para educar com firmeza, empatia e amor</h2>
+    <div class="mockup" data-reveal="right" data-delay="300" data-duration="800">
+      <img src="img/hero-mockup.webp" alt="Guia “Não Precisa Gritar” com os 2 bónus">
+    </div>
+    <a class="btn btn-lg" href="#oferta" data-reveal="up" data-delay="450">Quero educar com amor e sem gritar</a>
+  </div>
+</header>
+
+<section class="bg">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Sentes-te assim por vezes?</h3>
+    <img class="pain-photo" src="img/mae-preocupada.webp" alt="Mãe pensativa" data-reveal="right" data-delay="200" data-duration="800">
+    <ul class="clean" data-reveal="up" data-delay="150">
+      <li>Prometes que não vais gritar, mas ao fim do dia a culpa volta a aparecer.</li>
+      <li>Repetes frases que ouviste na tua própria infância e arrependes-te logo a seguir.</li>
+      <li>Sentes que falta firmeza sem teres de discutir a cada pedido simples.</li>
+      <li>Gostavas de saber exatamente o que dizer na hora da birra, sem perder a paciência.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Com o guia “Não Precisa Gritar”, vais:</h3>
+    <ul class="clean" data-reveal="up" data-delay="150">
+      <li>Ter frases prontas e respeitosas para os momentos mais difíceis do dia.</li>
+      <li>Compreender a base científica da Comunicação Não Violenta aplicada à maternidade.</li>
+      <li>Impor limites com firmeza e empatia, sem gritar e sem culpa.</li>
+      <li>Restabelecer a ligação com o teu filho e transformar a rotina em cooperação.</li>
+    </ul>
+    <p style="margin-top:22px" data-reveal="up" data-delay="300"><a class="btn btn-lg" href="#oferta">Quero parar de gritar e voltar a ligar-me</a></p>
+  </div>
+</section>
+
+<section class="bg">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">O que outras mães estão a dizer</h3>
+    <div class="testi-grid">
+      <img class="testi-img" src="img/depoimento-1.webp" alt="Testemunho de mãe — captura de ecrã de mensagem" data-reveal="up" data-delay="150">
+      <img class="testi-img" src="img/depoimento-2.webp" alt="Testemunho de mãe — captura de ecrã de mensagem" data-reveal="up" data-delay="300">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">O que vais receber</h3>
+    <div class="pack-grid">
+      <div class="card" data-reveal="up" data-delay="0">
+        <img class="cover" src="img/capa-principal.webp" alt="Capa do guia Não Precisa Gritar">
+        <h4>Guia Digital “Não Precisa Gritar”</h4>
+        <p>O guia principal com frases prontas e a base científica da Comunicação Não Violenta.</p>
+        <span class="badge">Valor: R$47</span>
+      </div>
+      <div class="card" data-reveal="up" data-delay="150">
+        <img class="cover" src="img/bonus-1.webp" alt="Capa do bónus Filhos Confiantes e Emocionalmente Inteligentes">
+        <h4>Bónus 1 — “Filhos Confiantes e Emocionalmente Inteligentes”</h4>
+        <p>Como desenvolver segurança e inteligência emocional desde cedo.</p>
+        <span class="badge">Valor: R$25</span>
+      </div>
+      <div class="card" data-reveal="up" data-delay="300">
+        <img class="cover" src="img/bonus-2.webp" alt="Capa do bónus Da Criança que Fui à Mãe que Quero Ser">
+        <h4>Bónus 2 — “Da Criança que Fui à Mãe que Quero Ser”</h4>
+        <p>Um convite para ressignificar a própria história e viver a maternidade com leveza.</p>
+        <span class="badge">Valor: R$25</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Porque é que este guia é diferente</h3>
+    <div class="feature-row">
+      <div class="feature" data-reveal="left" data-delay="0"><div class="ic">🧠</div><h4>Base científica</h4><p>Assente na Comunicação Não Violenta, não em meras suposições.</p></div>
+      <div class="feature" data-reveal="left" data-delay="150"><div class="ic">💬</div><h4>Frases prontas</h4><p>Sabes exatamente o que dizer na hora da birra.</p></div>
+      <div class="feature" data-reveal="left" data-delay="300"><div class="ic">⏱️</div><h4>Resultado em 7 dias</h4><p>Prático e direto ao assunto, para aplicares já na primeira semana.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="oferta">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Oferta especial e limitada</h3>
+    <p class="lead" data-reveal="up" data-delay="150">Leva o guia completo e os 2 bónus por um valor simbólico.</p>
+    <p class="strike" data-reveal="up" data-delay="250">De R$97</p>
+    <p class="price" data-reveal="up" data-delay="350" data-duration="800">HOJE: 7,90 €</p>
+    <p class="sub" data-reveal="up" data-delay="450">Pagamento único · Acesso imediato · Compra 100% segura</p>
+    <p style="margin-top:18px" data-reveal="up" data-delay="550"><a class="btn btn-lg" href="#oferta">Levar tudo por 7,90 € agora</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <div class="seal" data-reveal="up" data-delay="0"><b>14</b>dias de garantia</div>
+    <h3 data-reveal="up" data-delay="100">Garantia incondicional de 14 dias</h3>
+    <p class="lead" data-reveal="up" data-delay="200">Se, por qualquer motivo, não gostares, basta enviares um e-mail no prazo de 14 dias e devolvemos 100% do valor. O risco é todo nosso.</p>
+    <p data-reveal="up" data-delay="300"><a class="btn" href="#oferta">Quero experimentar sem risco</a></p>
+  </div>
+</section>
+
+<section class="bg faq">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Perguntas frequentes</h3>
+    <details data-reveal="up" data-delay="100"><summary>Como recebo o material?</summary><p>O acesso é 100% digital e disponibilizado imediatamente após a confirmação do pagamento.</p></details>
+    <details data-reveal="up" data-delay="220"><summary>Serve para filhos de qualquer idade?</summary><p>Sim. As técnicas adaptam-se desde a primeira infância até à pré-adolescência.</p></details>
+    <details data-reveal="up" data-delay="340"><summary>Por quanto tempo tenho acesso?</summary><p>O acesso é vitalício — podes consultar o guia sempre que precisares.</p></details>
+    <details data-reveal="up" data-delay="460"><summary>E se não gostar?</summary><p>Tens 14 dias de garantia incondicional, com devolução integral.</p></details>
+  </div>
+</section>
+
+<footer class="end">
+  <div class="wrap center">
+    <h3 data-reveal="up" data-delay="0">Pronta para uma maternidade com mais leveza?</h3>
+    <p data-reveal="up" data-delay="150">Começa hoje a educar com firmeza, empatia e amor — sem gritos e sem culpa.</p>
+    <p style="margin-top:18px" data-reveal="up" data-delay="350" data-duration="800"><a class="btn btn-lg" href="#oferta">Garantir o meu acesso por 7,90 €</a></p>
+  </div>
+</footer>
+
+<!-- Progressive Blur: barra fixa no rodapé, 8 camadas de blur crescente (0.25 → 32px) -->
+<div class="progressive-blur" aria-hidden="true" id="progressiveBlur"></div>
+
+<script>
+  // CTAs são apenas demonstração de design — sem checkout real.
+  document.querySelectorAll('a.btn').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const href=a.getAttribute('href');
+      if(href && href.startsWith('#')){
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+
+  // ===== PROGRESSIVE BLUR — monta as 8 camadas com máscara em gradiente =====
+  (function(){
+    var op='rgba(0,0,0,1)', tr='rgba(0,0,0,0)';
+    var layers=[
+      {blur:0.25, mask:'linear-gradient(to bottom,'+tr+' 0%,'+op+' 12.5%,'+op+' 25%,'+tr+' 37.5%)'},
+      {blur:0.5,  mask:'linear-gradient(to bottom,'+tr+' 12.5%,'+op+' 25%,'+op+' 37.5%,'+tr+' 50%)'},
+      {blur:1,    mask:'linear-gradient(to bottom,'+tr+' 25%,'+op+' 37.5%,'+op+' 50%,'+tr+' 62.5%)'},
+      {blur:2,    mask:'linear-gradient(to bottom,'+tr+' 37.5%,'+op+' 50%,'+op+' 62.5%,'+tr+' 75%)'},
+      {blur:4,    mask:'linear-gradient(to bottom,'+tr+' 50%,'+op+' 62.5%,'+op+' 75%,'+tr+' 87.5%)'},
+      {blur:8,    mask:'linear-gradient(to bottom,'+tr+' 62.5%,'+op+' 75%,'+op+' 87.5%,'+tr+' 100%)'},
+      {blur:16,   mask:'linear-gradient(to bottom,'+tr+' 75%,'+op+' 87.5%,'+op+' 100%)'},
+      {blur:32,   mask:'linear-gradient(to bottom,'+tr+' 87.5%,'+op+' 100%)'}
+    ];
+    var host=document.getElementById('progressiveBlur');
+    if(host){
+      layers.forEach(function(l){
+        var d=document.createElement('div');
+        var b='blur('+l.blur+'px)';
+        d.style.backdropFilter=b;
+        d.style.webkitBackdropFilter=b;        // Safari
+        d.style.maskImage=l.mask;
+        d.style.webkitMaskImage=l.mask;        // Safari
+        host.appendChild(d);
+      });
+    }
+  })();
+
+  // ===== SCROLL REVEAL — IntersectionObserver, zero dependências =====
+  (function(){
+    var items=document.querySelectorAll('[data-reveal]');
+    var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(reduce || typeof IntersectionObserver==='undefined'){
+      items.forEach(function(el){el.classList.add('is-visible');});
+      return;
+    }
+
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        var el=entry.target;
+        var delay=parseInt(el.getAttribute('data-delay')||'0',10);
+        var duration=el.getAttribute('data-duration');
+        if(duration){
+          el.style.transitionDuration=duration+'ms';
+        }
+        el.style.transitionDelay=delay+'ms';
+        el.classList.add('is-visible');
+        io.unobserve(el);  // once: true
+      });
+    },{threshold:0.15, rootMargin:'0px 0px -50px 0px'});
+
+    items.forEach(function(el){io.observe(el);});
+  })();
+</script>
